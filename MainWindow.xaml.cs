@@ -51,25 +51,19 @@ namespace Muresan_Miriam_Lab5
 
             firstNameTextBoxBinding.Path = new PropertyPath("FirstName");
             lastNameTextBoxBinding.Path = new PropertyPath("LastName");
+            purchaseDateBinding.Path = new PropertyPath("PurchaseDate");
             firstNameTextBox.SetBinding(TextBox.TextProperty, firstNameTextBoxBinding);
             lastNameTextBox.SetBinding(TextBox.TextProperty, lastNameTextBoxBinding);
+            purchaseDatePicker.SetBinding(DatePicker.SelectedDateProperty, purchaseDateBinding);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-            System.Windows.Data.CollectionViewSource carViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("carViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // carViewSource.Source = [generic data source]
-            System.Windows.Data.CollectionViewSource customerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("customerViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // customerViewSource.Source = [generic data source]
-
             carViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("carViewSource"))); 
             carViewSource.Source = ctx.Cars.Local; 
             ctx.Cars.Load();
 
-            carViewSource =
+            customerViewSource =
            ((System.Windows.Data.CollectionViewSource)(this.FindResource("customerViewSource")));
             customerViewSource.Source = ctx.Customers.Local;
             ctx.Customers.Load();
@@ -238,7 +232,7 @@ namespace Muresan_Miriam_Lab5
             {
                 try
                 {
-                    customer = (Customer)carDataGrid.SelectedItem;
+                    customer = (Customer)customerDataGrid.SelectedItem;
                     customer.FirstName = firstNameTextBox.Text.Trim();
                     customer.LastName = lastNameTextBox.Text.Trim();
                     customer.PurchaseDate = purchaseDatePicker.SelectedDate;
@@ -258,7 +252,7 @@ namespace Muresan_Miriam_Lab5
             {
                 try
                 {
-                    customer = (Customer)carDataGrid.SelectedItem;
+                    customer = (Customer)customerDataGrid.SelectedItem;
                     ctx.Customers.Remove(customer);
                     ctx.SaveChanges();
                 }
